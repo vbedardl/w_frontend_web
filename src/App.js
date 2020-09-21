@@ -1,25 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Selector from "./Components/Selector";
+import UsersModal from "./Components/Users/UsersModal";
+import PackagesModal from "./Components/Packages/PackagesModal";
+import { ApolloProvider } from "@apollo/client";
 
-function App() {
+function App(props) {
+  const [usersModalOpen, setUsersModalOpen] = useState(false);
+  const [packagesModalOpen, setPackagesModalOpen] = useState(false);
+
+  const openUsersModal = () => {
+    setUsersModalOpen(true);
+  };
+
+  const closeUsersModal = () => {
+    setUsersModalOpen(false);
+  };
+
+  const openPackagesModal = () => {
+    setPackagesModalOpen(true);
+  };
+  const closePackagesModal = () => {
+    setPackagesModalOpen(false);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={props.client}>
+      <div className="App">
+        <h1>Web Admin</h1>
+        <Selector
+          openUsersModal={openUsersModal}
+          openPackagesModal={openPackagesModal}
+        />
+        <UsersModal open={usersModalOpen} close={closeUsersModal} />
+        <PackagesModal open={packagesModalOpen} close={closePackagesModal} />
+      </div>
+    </ApolloProvider>
   );
 }
 
