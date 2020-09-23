@@ -18,7 +18,7 @@ The Web Admin Panel was built using create-react-app. It is connected to a Graph
 ### Screenshots
 
 ![User Management Tab](https://github.com/vbedardl/w_frontend_web/blob/master/doc/UserManagement.gif?raw=true)
-![Package Management Tab](https://github.com/vbedardl/w_frontend_web/blob/master/doc/packageManagement.gif?raw=true)
+![Package Management Tab](https://github.com/vbedardl/w_frontend_web/blob/master/doc/W_Package_Management.gif?raw=true)
 
 ## Dependencies
 
@@ -54,3 +54,4 @@ The Web Admin Panel was built using create-react-app. It is connected to a Graph
 
 - Adding code input on page load that requires the Admin password to open the session. The code would be requested after x minutes of innactivity.
 - Adding live search bar to Users tab and Packages tab to facilitate search
+- Fixing subscription so when a user is deleted and its packages are also deleted, the package tab updates without refresh
