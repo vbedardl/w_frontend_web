@@ -1,68 +1,53 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Web Admin (Walter)
 
-## Available Scripts
+The Web Admin Panel has access to a User Management tab and a Package Management tab.
 
-In the project directory, you can run:
+## User Management Tab
 
-### `npm start`
+This tab allows to create user. With name, email and their unit number, a random password is generated. The new user can then login into his mobile app using his new credentials.
+The Admin can also delete users from the system.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Package Management Tab
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+This tab allow to list packages that have been droped at the reception but that haven't been picked up yet. The admin can then, when presented with a proof, give the package to its owner and mark the package in the system as "Picked up".
 
-### `npm test`
+### How it works
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The Web Admin Panel was built using create-react-app. It is connected to a Graphql/Prisma server.
 
-### `npm run build`
+### Screenshots
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Dependencies
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- @apollo/client: ^3.2.0
+- @material-ui/core: ^4.11.0
+- @material-ui/icons: ^4.9.1
+- @testing-library/jest-dom: ^4.2.4
+- @testing-library/react: ^9.5.0
+- @testing-library/user-event: ^7.2.1
+- generate-password: ^1.5.1
+- graphql: ^15.3.0
+- material-table: ^1.69.0
+- react: ^16.13.1
+- react-dom: ^16.13.1
+- react-scripts: 3.4.3
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Getting Started
 
-### `npm run eject`
+- Install all dependencies using `npm install` command
+- Clone the w_backend from https://github.com/vbedardl/w_backend and run the development server using `npm start`
+- On a separate terminal, run development build using `npm start` from project root folder
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Current Functionality
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Create a user
+- Delete a user
+- Update a package
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Get a list of users
+- Get a list of unpicked packages
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Further Development
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- Adding code input on page load that requires the Admin password to open the session. The code would be requested after x minutes of innactivity.
+- Adding live search bar to Users tab and Packages tab to facilitate search

@@ -7,42 +7,17 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { useQuery, gql, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ConfirmModal from "./confirmModal";
 import UserFormModal from "./UserFormModal";
 import Button from "@material-ui/core/Button";
-
-const GET_RESIDENTS = gql`
-  query($query: String) {
-    users(query: $query) {
-      id
-      name
-      email
-      unit {
-        name
-      }
-    }
-  }
-`;
-const CREATE_USER = gql`
-  mutation($name: String!, $password: String!, $email: String!, $unit: ID!) {
-    createUser(name: $name, password: $password, email: $email, unit: $unit) {
-      id
-      email
-      name
-    }
-  }
-`;
-const DELETE_USER = gql`
-  mutation($id: ID!) {
-    deleteUser(id: $id) {
-      id
-      email
-      name
-    }
-  }
-`;
+import {
+  GET_RESIDENTS,
+  CREATE_USER,
+  DELETE_USER,
+  GET_PACKAGES,
+} from "../../utils/Queries";
 
 const useStyles = makeStyles({
   table: {
@@ -53,7 +28,10 @@ const useStyles = makeStyles({
 export default function SimpleTable(props) {
   const classes = useStyles();
   const { loading, error, data } = useQuery(GET_RESIDENTS);
+  const [createUserGQL] = useMutation(CREATE_USER);
+  const [deleteUserGQL] = useMutation(DELETE_USER);
   const [usersData, setUsersData] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [confirmDeletionModalOpen, setConfirmDeletionModalOpen] = useState(
     false
   );
@@ -63,12 +41,6 @@ export default function SimpleTable(props) {
       setUsersData(data.users);
     }
   }, [data]);
-
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [userFormOpen, setUserFormOpen] = useState(false);
-
-  const [createUserGQL] = useMutation(CREATE_USER);
-  const [deleteUserGQL] = useMutation(DELETE_USER);
 
   const confirmDeletion = (userId) => {
     setConfirmDeletionModalOpen(true);
@@ -84,21 +56,16 @@ export default function SimpleTable(props) {
       refetchQueries: [{ query: GET_RESIDENTS }],
     });
   };
-  const openUserForm = () => {
-    setUserFormOpen(true);
-  };
-  const closeUserForm = () => {
-    setUserFormOpen(false);
-  };
+
   const createUser = (data) => {
     console.log("To get user password:", data);
     createUserGQL({
       variables: {
         ...data,
       },
-      refetchQueries: [{ query: GET_RESIDENTS }],
+      refetchQueries: [{ query: GET_RESIDENTS }, { query: GET_PACKAGES }],
     });
-    setUserFormOpen(false);
+    props.closeUserForm();
   };
   return (
     <>
@@ -134,13 +101,6 @@ export default function SimpleTable(props) {
               </TableBody>
             </Table>
           </TableContainer>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => openUserForm()}
-          >
-            Add a user
-          </Button>
         </>
       )}
       <ConfirmModal
@@ -149,8 +109,8 @@ export default function SimpleTable(props) {
         confirm={() => deleteTheUser(selectedUser)}
       />
       <UserFormModal
-        open={userFormOpen}
-        close={closeUserForm}
+        open={props.userFormOpen}
+        close={props.closeUserForm}
         submit={createUser}
       />
     </>

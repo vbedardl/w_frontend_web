@@ -8,31 +8,19 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { useQuery, gql, useMutation } from "@apollo/client";
-import DeleteIcon from "@material-ui/icons/Delete";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
-
-const GET_PACKAGES = gql`
-  query {
-    packages {
-      createdAt
-      id
-      pickedUp
-    }
-  }
-`;
-const MARK_AS_PICKEDUP = gql`
-  mutation($id: ID!) {
-    updatePackage(id: $id, data: { pickedUp: true }) {
-      id
-      pickedUp
-    }
-  }
-`;
+import chrono from "../../utils/chrono";
+import { GET_PACKAGES, MARK_AS_PICKEDUP } from "../../utils/Queries";
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
+  },
+  button: {
+    width: "50%",
+    alignSelf: "center",
+    margin: "1em",
   },
 });
 
@@ -49,10 +37,12 @@ export default function SimpleTable(props) {
   };
 
   const updatePackage = () => {
+    console.log("the selected ackage id:", selectedPackage);
     updatePackageGQL({
       variables: { id: selectedPackage },
       refetchQueries: [{ query: GET_PACKAGES }],
     });
+    setChecked(false);
   };
 
   return (
@@ -67,19 +57,25 @@ export default function SimpleTable(props) {
                 <TableRow>
                   <TableCell>Package for</TableCell>
                   <TableCell align="right">Resident's unit</TableCell>
-                  <TableCell align="right">Created At</TableCell>
+                  <TableCell align="right">Created</TableCell>
+                  <TableCell align="right">Pick up</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {data.packages.map((pack) => (
                   <TableRow key={pack.id}>
                     <TableCell component="th" scope="row">
-                      Residents name
+                      {pack.owner.name}
                     </TableCell>
-                    <TableCell align="right">Residents unit</TableCell>
-                    <TableCell align="right">{pack.createdAt}</TableCell>
+                    <TableCell align="right">{pack.owner.unit.name}</TableCell>
+                    <TableCell align="right">
+                      {chrono(new Date() - new Date(pack.createdAt))}
+                    </TableCell>
                     <TableCell align="right">
                       <Checkbox
+                        disabled={
+                          checked && selectedPackage !== pack.id ? true : false
+                        }
                         value={pack.id}
                         onChange={handleChange}
                         inputProps={{ "aria-label": "secondary checkbox" }}
@@ -94,6 +90,7 @@ export default function SimpleTable(props) {
             <Button
               color="primary"
               variant="outlined"
+              className={classes.button}
               onClick={() => updatePackage()}
             >
               Mark package as picked up
