@@ -6,6 +6,7 @@ export const GET_RESIDENTS = gql`
       id
       name
       email
+      phone
       unit {
         name
       }
@@ -14,11 +15,24 @@ export const GET_RESIDENTS = gql`
 `;
 
 export const CREATE_USER = gql`
-  mutation($name: String!, $password: String!, $email: String!, $unit: ID!) {
-    createUser(name: $name, password: $password, email: $email, unit: $unit) {
+  mutation(
+    $name: String!
+    $password: String!
+    $email: String!
+    $unit: ID!
+    $phone: String!
+  ) {
+    createUser(
+      name: $name
+      password: $password
+      email: $email
+      unit: $unit
+      phone: $phone
+    ) {
       id
       email
       name
+      phone
     }
   }
 `;

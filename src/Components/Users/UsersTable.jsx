@@ -58,7 +58,6 @@ export default function SimpleTable(props) {
   };
 
   const createUser = (data) => {
-    console.log("To get user password:", data);
     createUserGQL({
       variables: {
         ...data,
@@ -80,6 +79,7 @@ export default function SimpleTable(props) {
                   <TableCell>Unit #</TableCell>
                   <TableCell align="right">Resident</TableCell>
                   <TableCell align="right">Email</TableCell>
+                  <TableCell align="right">Phone</TableCell>
                   <TableCell align="right">Delete</TableCell>
                 </TableRow>
               </TableHead>
@@ -91,6 +91,8 @@ export default function SimpleTable(props) {
                     </TableCell>
                     <TableCell align="right">{user.name}</TableCell>
                     <TableCell align="right">{user.email}</TableCell>
+                    <TableCell align="right">{user.phone}</TableCell>
+
                     <TableCell align="right">
                       <Button color="secondary">
                         <DeleteIcon onClick={() => confirmDeletion(user.id)} />

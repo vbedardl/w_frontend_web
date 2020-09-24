@@ -6,16 +6,19 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import generator from "generate-password";
+import MuiPhoneNumber from "material-ui-phone-number";
 
 export default function FormDialog(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [unit, setUnit] = useState("");
+  const [phone, setPhone] = useState(null);
 
   const sendUserData = () => {
     const user = {
       name,
       email,
+      phone,
       unit,
       password: generator.generate({ length: 8, numbers: true }),
     };
@@ -59,6 +62,14 @@ export default function FormDialog(props) {
             fullWidth
             onChange={(e) => setUnit(e.target.value)}
             value={unit}
+          />
+          <MuiPhoneNumber
+            name="phone"
+            label="Phone Number"
+            data-cy="user-phone"
+            defaultCountry={"us"}
+            value={phone}
+            onChange={(value) => setPhone(value)}
           />
         </DialogContent>
         <DialogActions>

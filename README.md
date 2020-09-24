@@ -17,7 +17,9 @@ The Web Admin Panel was built using create-react-app. It is connected to a Graph
 
 ### Screenshots
 
-![User Management Tab](https://github.com/vbedardl/w_frontend_web/blob/master/doc/UserManagement.gif?raw=true)
+![User Management Tab](https://github.com/vbedardl/w_frontend_web/blob/master/doc/Users.png?raw=true)
+![Package Management Tab](https://github.com/vbedardl/w_frontend_web/blob/master/doc/Packages.png?raw=true)!
+[User Management Tab](https://github.com/vbedardl/w_frontend_web/blob/master/doc/UserManagement.gif?raw=true)
 ![Package Management Tab](https://github.com/vbedardl/w_frontend_web/blob/master/doc/W_Package_Management.gif?raw=true)
 
 ## Dependencies

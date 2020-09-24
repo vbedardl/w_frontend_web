@@ -58,6 +58,7 @@ export default function SimpleTable(props) {
                   <TableCell>Package for</TableCell>
                   <TableCell align="right">Resident's unit</TableCell>
                   <TableCell align="right">Created</TableCell>
+                  <TableCell align="right">Verification</TableCell>
                   <TableCell align="right">Pick up</TableCell>
                 </TableRow>
               </TableHead>
@@ -71,6 +72,8 @@ export default function SimpleTable(props) {
                     <TableCell align="right">
                       {chrono(new Date() - new Date(pack.createdAt))}
                     </TableCell>
+                    <TableCell align="right">{pack.id}</TableCell>
+
                     <TableCell align="right">
                       <Checkbox
                         disabled={
